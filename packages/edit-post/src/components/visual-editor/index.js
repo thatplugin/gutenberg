@@ -193,6 +193,7 @@ export default function VisualEditor( { styles } ) {
 		<div
 			className={ classnames( 'edit-post-visual-editor', {
 				'is-template-mode': isTemplateMode,
+				'is-preview-mode': deviceType && deviceType !== 'Desktop',
 			} ) }
 		>
 			<VisualEditorGlobalKeyboardShortcuts />

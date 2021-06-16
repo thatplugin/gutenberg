@@ -26,6 +26,11 @@
 		flex-basis: 100%;
 	}
 
+	&.is-template-mode,
+	&.is-preview-mode {
+		background-color: $gray-800;
+	}
+
 }
 
 // Ideally this wrapper div is not needed but if we want to match the positioning of blocks
