@@ -75,6 +75,7 @@ export default function LatestPostsEdit( { attributes, setAttributes } ) {
 		featuredImageSizeWidth,
 		featuredImageSizeHeight,
 		addLinkToFeaturedImage,
+		showBulletPoints,
 	} = attributes;
 	const {
 		imageSizeOptions,
@@ -401,6 +402,15 @@ export default function LatestPostsEdit( { attributes, setAttributes } ) {
 					/>
 				) }
 			</PanelBody>
+			<PanelBody title={ __( 'Display settings' ) }>
+				<ToggleControl
+					label={ __( 'Show bullet points' ) }
+					checked={ showBulletPoints }
+					onChange={ ( value ) =>
+						setAttributes( { showBulletPoints: value } )
+					}
+				/>
+			</PanelBody>
 		</InspectorControls>
 	);
 
@@ -411,6 +421,8 @@ export default function LatestPostsEdit( { attributes, setAttributes } ) {
 			'has-dates': displayPostDate,
 			'has-author': displayAuthor,
 			[ `columns-${ columns }` ]: postLayout === 'grid',
+			'has-no-bullet-points': ! showBulletPoints,
+			'has-bullet-points': showBulletPoints,
 		} ),
 	} );
 

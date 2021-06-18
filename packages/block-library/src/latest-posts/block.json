@@ -79,6 +79,10 @@
 		"addLinkToFeaturedImage": {
 			"type": "boolean",
 			"default": false
+		},
+		"showBulletPoints": {
+			"type": "boolean",
+			"default": false
 		}
 	},
 	"supports": {
