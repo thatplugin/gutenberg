@@ -70,7 +70,7 @@ export default function useTabNav() {
 		}
 	}
 
-	const before = (
+	let before = (
 		<div
 			ref={ focusCaptureBeforeRef }
 			tabIndex={ focusCaptureTabIndex }
@@ -79,7 +79,7 @@ export default function useTabNav() {
 		/>
 	);
 
-	const after = (
+	let after = (
 		<div
 			ref={ focusCaptureAfterRef }
 			tabIndex={ focusCaptureTabIndex }
@@ -148,5 +148,7 @@ export default function useTabNav() {
 
 	const mergedRefs = useMergeRefs( [ container, ref ] );
 
+	before = null;
+	after = null;
 	return [ before, mergedRefs, after ];
 }
