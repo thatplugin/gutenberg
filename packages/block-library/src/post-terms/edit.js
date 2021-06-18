@@ -108,7 +108,7 @@ export default function PostTermsEdit( {
 					! isLoadingTermLinks &&
 					termLinks.reduce( ( prev, curr ) => [
 						prev,
-						separator || ' | ',
+						separator || ', ',
 						curr,
 					] ) }
 
