@@ -22,7 +22,7 @@ import './filters';
 
 const { wp } = window;
 
-const DISABLED_BLOCKS = [ 'core/more' ];
+const DISABLED_BLOCKS = [ 'core/more', 'core/block' ];
 const ENABLE_EXPERIMENTAL_FSE_BLOCKS = false;
 
 /**
