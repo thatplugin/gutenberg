@@ -11,24 +11,50 @@ import type * as React from 'react';
  * by `ComponentPropsWithRef`. The context is that components should require the `children`
  * prop explicitely when needed (see https://github.com/WordPress/gutenberg/pull/31817).
  */
-export type PolymorphicComponentProps< P, T extends React.ElementType > = P &
-	Omit< React.ComponentPropsWithRef< T >, 'as' | keyof P | 'children' > & {
-		as?: T | keyof JSX.IntrinsicElements;
-	};
+export type PolymorphicComponentProps<
+	P,
+	T extends React.ElementType,
+	IsPolymorphic extends boolean = true
+> = P &
+	Omit< React.ComponentPropsWithRef< T >, 'as' | keyof P | 'children' > &
+	( IsPolymorphic extends true
+		? {
+				as?: T | keyof JSX.IntrinsicElements;
+		  }
+		: { as?: never } );
 
 export type ElementTypeFromPolymorphicComponentProps<
 	P
-> = P extends PolymorphicComponentProps< unknown, infer T > ? T : never;
+> = P extends PolymorphicComponentProps< unknown, infer T, any > ? T : never;
 
 export type PropsFromPolymorphicComponentProps<
 	P
-> = P extends PolymorphicComponentProps< infer PP, any > ? PP : never;
+> = P extends PolymorphicComponentProps< infer PP, any, any > ? PP : never;
 
-export type PolymorphicComponent< T extends React.ElementType, O > = {
+export type IsPolymorphicFromPolymorphicComponentProps<
+	P
+> = P extends PolymorphicComponentProps< any, any, infer R > ? R : never;
+
+export type PolymorphicComponent<
+	T extends React.ElementType,
+	O,
+	IsPolymorphic extends boolean
+> = {
 	< TT extends React.ElementType >(
-		props: PolymorphicComponentProps< O, TT > & { as: TT }
+		props: PolymorphicComponentProps<
+			O,
+			TT,
+			IsPolymorphic extends true ? true : false
+		> &
+			( IsPolymorphic extends true ? { as: TT } : { as: never } )
 	): JSX.Element | null;
-	( props: PolymorphicComponentProps< O, T > ): JSX.Element | null;
+	(
+		props: PolymorphicComponentProps<
+			O,
+			T,
+			IsPolymorphic extends true ? true : false
+		>
+	): JSX.Element | null;
 	displayName?: string;
 	/**
 	 * A CSS selector used to fake component interpolation in styled components
