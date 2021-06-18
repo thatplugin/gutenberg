@@ -9,11 +9,12 @@ import { find } from 'lodash';
  */
 import {
 	AlignmentToolbar,
+	InspectorAdvancedControls,
 	BlockControls,
 	Warning,
 	useBlockProps,
 } from '@wordpress/block-editor';
-import { Spinner } from '@wordpress/components';
+import { Spinner, TextControl } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
@@ -28,7 +29,7 @@ export default function PostTermsEdit( {
 	context,
 	setAttributes,
 } ) {
-	const { term, textAlign } = attributes;
+	const { term, textAlign, separator } = attributes;
 	const { postId, postType } = context;
 
 	const selectedTerm = useSelect(
@@ -89,6 +90,17 @@ export default function PostTermsEdit( {
 					} }
 				/>
 			</BlockControls>
+			<InspectorAdvancedControls>
+				<TextControl
+					autoComplete="off"
+					label={ __( 'Separator' ) }
+					value={ separator || '' }
+					onChange={ ( nextValue ) => {
+						setAttributes( { separator: nextValue } );
+					} }
+					help={ __( 'Enter character(s) used to separate terms.' ) }
+				/>
+			</InspectorAdvancedControls>
 			<div { ...blockProps }>
 				{ isLoadingTermLinks && <Spinner /> }
 
@@ -96,7 +108,7 @@ export default function PostTermsEdit( {
 					! isLoadingTermLinks &&
 					termLinks.reduce( ( prev, curr ) => [
 						prev,
-						' | ',
+						separator || ' | ',
 						curr,
 					] ) }
 
